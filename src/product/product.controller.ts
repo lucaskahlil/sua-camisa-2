@@ -14,7 +14,7 @@ export class ProductController {
   }
   @Get()
   findOne() {
-    return this.productService.findOne();
+    return this.productService.findOne('id');
   }
 
   @Post()

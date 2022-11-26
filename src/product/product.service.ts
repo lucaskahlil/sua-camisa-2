@@ -14,10 +14,9 @@ export class ProductService {
   findOne(id: string): Promise<Product> {
     return this.prisma.product.findUnique({ where: { id: id } });
   }
-
   create(createProductDto: CreateProductDto) {
     const product: Product = { ...createProductDto };
-    this.prisma.product.create({
+    return this.prisma.product.create({
       data: product,
     });
   }
