@@ -12,15 +12,18 @@ export class ProductService {
   findAll(): Promise<Product[]> {
     return this.prisma.product.findMany();
   }
+
   findOne(id: string): Promise<Product> {
     return this.prisma.product.findUnique({ where: { id: id } });
   }
-  create(createProductDto: CreateProductDto) {
+
+  create(createProductDto: CreateProductDto): Promise<Product> {
     const product: Product = { ...createProductDto };
     return this.prisma.product.create({
       data: product,
     });
   }
+
   update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
     const data: Partial<Product> = { ...updateProductDto };
     return this.prisma.product.update({
@@ -28,7 +31,10 @@ export class ProductService {
       data,
     });
   }
-  remove() {
-    throw new Error('Method not implemented.');
+
+  async delete(id: string) {
+    await this.prisma.product.delete({
+      where: { id },
+    });
   }
 }

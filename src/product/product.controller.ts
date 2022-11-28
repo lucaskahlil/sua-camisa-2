@@ -6,7 +6,6 @@ import {
   Param,
   Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateProductDto } from './dto/create.product.dto';
@@ -53,11 +52,11 @@ export class ProductController {
     return this.productService.update(id, updateProductDto);
   }
 
-  @Delete()
+  @Delete(':id')
   @ApiOperation({
     summary: 'Excluir um produto',
   })
-  remove() {
-    return this.productService.remove();
+  delete(@Param('id') id: string) {
+    this.productService.delete(id);
   }
 }
