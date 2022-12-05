@@ -47,6 +47,12 @@ export class ProductService {
   }
 
   async delete(id: string) {
+    const record = await this.prisma.product.findUnique({ where: { id: id } });
+
+    if (!record) {
+      throw new NotFoundException(`Registro com o ID ${id} não encontrado.`);
+    }
+
     await this.prisma.product.delete({
       where: { id },
     });
