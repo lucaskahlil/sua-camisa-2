@@ -24,9 +24,11 @@ export class ProductService {
 
   create(createProductDto: CreateProductDto): Promise<Product> {
     const product: Product = { ...createProductDto };
-    return this.prisma.product.create({
-      data: product,
-    });
+    return this.prisma.product
+      .create({
+        data: product,
+      })
+      .catch(this.handleError);
   }
 
   async update(
@@ -56,5 +58,10 @@ export class ProductService {
     await this.prisma.product.delete({
       where: { id },
     });
+  }
+
+  handleError(error: Error) {
+    console.log(error.message);
+    return undefined;
   }
 }
