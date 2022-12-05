@@ -42,10 +42,12 @@ export class ProductService {
     }
 
     const data: Partial<Product> = { ...updateProductDto };
-    return this.prisma.product.update({
-      where: { id },
-      data,
-    });
+    return this.prisma.product
+      .update({
+        where: { id },
+        data,
+      })
+      .catch(this.handleError);
   }
 
   async delete(id: string) {
