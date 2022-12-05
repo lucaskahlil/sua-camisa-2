@@ -29,7 +29,16 @@ export class ProductService {
     });
   }
 
-  update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
+    const record = await this.prisma.product.findUnique({ where: { id: id } });
+
+    if (!record) {
+      throw new NotFoundException(`Registro com o ID ${id} não encontrado.`);
+    }
+
     const data: Partial<Product> = { ...updateProductDto };
     return this.prisma.product.update({
       where: { id },
