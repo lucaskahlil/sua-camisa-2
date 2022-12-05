@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create.product.dto';
 import { UpdateProductDto } from './dto/update.product.dto';
@@ -13,8 +13,13 @@ export class ProductService {
     return this.prisma.product.findMany();
   }
 
-  findOne(id: string): Promise<Product> {
-    return this.prisma.product.findUnique({ where: { id: id } });
+  async findOne(id: string): Promise<Product> {
+    const record = await this.prisma.product.findUnique({ where: { id: id } });
+
+    if (!record) {
+      throw new NotFoundException(`Registro com o ID ${id} não encontrado.`);
+    }
+    return record;
   }
 
   create(createProductDto: CreateProductDto): Promise<Product> {
