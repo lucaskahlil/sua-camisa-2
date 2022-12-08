@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { handleError } from 'src/utils/handle.error.util';
 import { CreateProductDto } from './dto/create.product.dto';
 import { UpdateProductDto } from './dto/update.product.dto';
 import { Product } from './entities/product.entity';
@@ -28,7 +29,7 @@ export class ProductService {
       .create({
         data: product,
       })
-      .catch(this.handleError);
+      .catch(handleError);
   }
 
   async update(
@@ -47,7 +48,7 @@ export class ProductService {
         where: { id },
         data,
       })
-      .catch(this.handleError);
+      .catch(handleError);
   }
 
   async delete(id: string) {
@@ -60,10 +61,5 @@ export class ProductService {
     await this.prisma.product.delete({
       where: { id },
     });
-  }
-
-  handleError(error: Error) {
-    console.log(error.message);
-    return undefined;
   }
 }

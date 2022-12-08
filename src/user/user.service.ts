@@ -8,6 +8,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { handleError } from 'src/utils/handle.error.util';
 
 @Injectable()
 export class UserService {
@@ -42,7 +43,7 @@ export class UserService {
       .create({
         data: user,
       })
-      .catch(this.handleError);
+      .catch(handleError);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
@@ -71,7 +72,7 @@ export class UserService {
         where: { id },
         data,
       })
-      .catch(this.handleError);
+      .catch(handleError);
   }
 
   async delete(id: string) {
@@ -84,10 +85,5 @@ export class UserService {
     await this.prisma.user.delete({
       where: { id },
     });
-  }
-
-  handleError(error: Error) {
-    console.log(error.message);
-    return undefined;
   }
 }
