@@ -18,6 +18,8 @@ model Product {
   preco Float
   imagem String
 
+  orders order[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -31,9 +33,24 @@ model User {
   name String
   imagem String
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders order[]
+
+  @@map("user")
+}
+
+model order {
+  id String @id @default(uuid())  //criando id unico e de forma automática
+
+  user User @relation(fields: [userId], references: [id])
+  userId String
+
+  products Product[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("user")
+  @@map("order")
 }
