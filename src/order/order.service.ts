@@ -25,10 +25,21 @@ export class OrderService {
   }
 
   findAll() {
-    return `This action returns all order`;
+    return this.prisma.order.findMany({
+      include: {
+        products: true,
+        user: true,
+      },
+    });
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} order`;
+    return this.prisma.order.findUnique({
+      where: { id },
+      include: {
+        products: true,
+        user: true,
+      },
+    });
   }
 }
