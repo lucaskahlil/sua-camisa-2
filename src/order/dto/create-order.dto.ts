@@ -1,12 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsUUID } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsUUID, ValidateNested } from 'class-validator';
+import { CreateOrderProductDto } from './create-order-product.dto';
 
 export class CreateOrderDto {
   @IsUUID()
   @ApiProperty()
   userId: string;
 
-  @IsUUID(undefined, { each: true })
-  @ApiProperty()
-  products: string[];
+  @ValidateNested({ each: true })
+  @Type(() => CreateOrderProductDto)
+  @ApiProperty({
+    type: [CreateOrderProductDto],
+  })
+  products: CreateOrderProductDto[];
 }
