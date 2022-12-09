@@ -5,10 +5,10 @@ export class LoginDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  nickname: string;
+  email: string;
 
   @IsString()
   @MinLength(8)
   @IsNotEmpty()
-  password: string;
+  senha: string;
 }
