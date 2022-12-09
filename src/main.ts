@@ -24,6 +24,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3333); //Alterar o app listen para porta 3333 para nao ter conflito com front end
+  await app.listen(process.env.PORT || 3333); //Alterar o app listen para porta 3333 para nao ter conflito com front end
 }
 bootstrap();
