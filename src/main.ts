@@ -14,9 +14,11 @@ async function bootstrap() {
     .setDescription('EComerce de loja de camisa')
     .setVersion('1.0.0')
     .addTag('status')
+    .addTag('auth')
     .addTag('product')
     .addTag('user')
     .addTag('order')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
